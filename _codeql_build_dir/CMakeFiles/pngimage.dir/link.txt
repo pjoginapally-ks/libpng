@@ -1,0 +1,1 @@
+/home/runner/work/libpng/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/pngimage.dir/link.d CMakeFiles/pngimage.dir/contrib/libtests/pngimage.c.o -o pngimage  -Wl,-rpath,/home/runner/work/libpng/libpng/_codeql_build_dir libpng18.so.18.0.git /usr/lib/x86_64-linux-gnu/libz.so -lm
