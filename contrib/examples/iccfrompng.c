@@ -121,7 +121,7 @@ extract_one_file(const char *filename)
             FILE *of;
 
             memcpy(output, filename, len);
-            strcpy(output + len, ".icc");
+            memcpy(output + len, ".icc", 5);  /* includes null terminator */
 
             of = fopen(output, "wb");
             if (of != NULL)
