@@ -745,6 +745,7 @@ set_opt_string_(struct display *dp, unsigned int sp, png_byte opt,
    /* Add the appropriate option string to dp->curr. */
 {
    int offset, add;
+   size_t remaining;
 
    if (sp > 0)
       offset = dp->stack[sp-1].opt_string_end;
@@ -752,17 +753,25 @@ set_opt_string_(struct display *dp, unsigned int sp, png_byte opt,
    else
       offset = dp->opt_string_start;
 
+   /* Ensure offset is within bounds */
+   if (offset < 0 || offset >= (int)sizeof dp->curr)
+      display_log(dp, INTERNAL_ERROR, "invalid offset in set_opt_string_");
+
+   remaining = sizeof dp->curr - offset;
+
    if (entry_name == range_lo)
-      add = sprintf(dp->curr+offset, " --%s=%d", options[opt].name,
+      add = snprintf(dp->curr+offset, remaining, " --%s=%d", options[opt].name,
             dp->value[opt]);
 
    else
-      add = sprintf(dp->curr+offset, " --%s=%s", options[opt].name, entry_name);
+      add = snprintf(dp->curr+offset, remaining, " --%s=%s", options[opt].name, entry_name);
 
    if (add < 0)
-      display_log(dp, INTERNAL_ERROR, "sprintf failed");
+      display_log(dp, INTERNAL_ERROR, "snprintf failed");
 
-   assert(offset+add < (int)/*SAFE*/sizeof dp->curr);
+   if (add >= (int)remaining)
+      display_log(dp, INTERNAL_ERROR, "buffer overflow in set_opt_string_");
+
    return offset+add;
 }
 

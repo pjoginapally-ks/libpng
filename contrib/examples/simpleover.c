@@ -433,7 +433,8 @@ simpleover_process(png_image *output, png_byte *out_buf, int argc,
 
                /* Default a name if not given. */
                if (sprites[nsprites].name[0] == 0)
-                  sprintf(sprites[nsprites].name, "sprite-%d", nsprites + 1);
+                  snprintf(sprites[nsprites].name, sizeof(sprites[nsprites].name),
+                           "sprite-%d", nsprites + 1);
 
                /* Allocate a buffer for the sprite and calculate the buffer
                 * size:
