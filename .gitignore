@@ -112,6 +112,7 @@ CMakeUserPresets.json
 # Build, test and CI output directories
 [._]build*/
 /[Bb]uild/
+/build/
 /[Oo]ut/
 *[Dd]ebug/
 [Dd]ebug*/
